@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="static/ico/favicon.png">
+
+    <title>Edge Connect</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename=assets['bootstrap_css']) }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename=assets['game_css']) }}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static',           filename=assets['favicon_ico']) }}" >
+
+  </head>
+
+  <body>
+
+    <!-- Game Result Modal -->
+    <div class="modal fade" id="gameResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Game Result</h4>
+          </div>
+          <div class="modal-body" id="gameResultBody">
+              <p>Game Over!</p>
+              <p>RedPlayer Wins!</p>
+              <p>RedPlayer 18 points</p>
+              <p>BluePlayer 5 points</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+      
+    <div class="container">
+        <div class="col-md-10" id="board">
+        </div>
+        <div class="col-md-2">
+            <button type="button" id="btn_move" class="btn btn-success btn-block btn-lg">Make Move</button>
+            <h2 id="p1_name"></h2>
+            <h3 id="p1_time"></h3>
+            <h3 id="p1_score_est"></h3>
+            <h2 id="p2_name"></h2>
+            <h3 id="p2_time"></h3>
+            <h3 id="p2_score_est"></h3>
+            <div id="status"></div>
+            <div class="form-group">
+              <label for="game_id">Game URL</label>
+              <input type="text" class="form-control" id="game_id">
+            </div>
+            <div id="score_status"></div>
+            <hr>
+            <button type="button" id="btn_pass" class="btn btn-primary btn-block">Pass</button>
+            <button type="button" id="btn_exit" class="btn btn-danger btn-block">Leave Game</button>
+
+        </div>
+    </div><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename=assets['d3_js']) }}"></script> 
+    <script src="{{ url_for('static', filename=assets['bootstrap_js']) }}"></script> 
+    <script src="{{ url_for('static', filename=assets['lib_js']) }}"></script> 
+    <script src="{{ url_for('static', filename=assets['game_page_js']) }}"></script> 
+
+  </body>
+</html>

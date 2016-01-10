@@ -1,1 +1,1 @@
-# EdgeConnect
+# EdgeConnect2 player game played on a haxgonal board.
