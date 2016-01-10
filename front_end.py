@@ -202,6 +202,7 @@ def show_game():
 @app.route('/get_state', methods=['GET', 'POST'])
 def get_state():
   # Get the current state of the game
+  # TODO: handle a case where one of the players disconnected (or closed the browser)
   user = app.users.get(session.get('user_id'))
   if user is None:
     return ''

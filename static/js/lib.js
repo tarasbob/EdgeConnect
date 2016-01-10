@@ -3,7 +3,8 @@ window.emptyCellColors = ["#edcfa8", "#ab7f5b", "#cba781"];
 window.strokeColor = "#704c29";
 
 function redraw(){
-    //CIRCLE DRAWING
+    /* This function mostly focuses on drawing circles */
+
     //remove all the cirlces
     window.groups.selectAll("circle").remove();
 
@@ -42,7 +43,7 @@ function redraw(){
         .attr("cx", function(d){ return getRealCoord(d.x, d.y, d.z).x; })
         .attr("cy", function(d){ return getRealCoord(d.x, d.y, d.z).y; });
 
-    //STYLE THE HEXES
+    // Color all hexes with the appropriate color
     window.hexes.attr("stroke", window.strokeColor)
         .attr("stroke-width", window.cellSize/50)
         .attr("fill", function(d){
@@ -50,12 +51,14 @@ function redraw(){
         });
 }
 
-function properColor(d){
-    if(d.state == 0) return window.emptyCellColors[d.patternCol];
-    return window.playerColors[d.state];
+function properColor(cell){
+    // What color should the given cell have?
+    if(cell.state == 0) return window.emptyCellColors[cell.patternCol];
+    return window.playerColors[cell.state];
 }
 
 function getRealCoord(x, y, z){
+    // Given the x, y, z coordinates, return the acutal x and y coordinates 
     coord = new Object();
     var centerX = window.svgW/2;
     var centerY = window.svgH/2;
@@ -64,16 +67,17 @@ function getRealCoord(x, y, z){
     return coord;
 }
 
-
 function getCell(){
     /* Returns the cell at specified coordinates. */
     if(arguments.length == 3)
+        // if 3 arguments are given, then it's x, y, z
         return window.dataset[window.cellMap['' + arguments[0] + ':' + arguments[1] + ':' + arguments[2]]];
     else
+        // if only one argument is given, then it's an array containing [x, y, z]
         return window.dataset[window.cellMap['' + arguments[0][0] + ':' + arguments[0][1] + ':' + arguments[0][2]]];
 }
 
-function cellExists(i, j, k){
+function cellExists(){
     if(arguments.length == 3)
         return ('' + arguments[0] + ':' + arguments[1] + ':' + arguments[2]) in window.cellMap;
     else
@@ -91,7 +95,6 @@ var forEveryCell = function(func){
         }
     }
 }
-
 
 Array.prototype.remove = function(element) {
     for (var i = 0; i < this.length; i++) {
@@ -148,8 +151,8 @@ Array.prototype.extendUnique = function(otherArr) {
 }
 
 function getNeighborsSimple(coord){
-    /* Given the coordinates of a cell, return an array of neighbor coordinates
-     * Does not take into account board size, or the center cell */
+    /* Given the coordinates of a cell, return an array of neighbor coordinates.
+     * Does not take into account board size. */
     var offsets = [[1, -1, 0], [-1, 1, 0], [1, 0, -1], [-1, 0, 1], [0, 1, -1], [0, -1, 1]];
     var neighbors = [];
     for(var i = 0; i < offsets.length; i++){
@@ -160,6 +163,7 @@ function getNeighborsSimple(coord){
 }
 
 function getNeighbors(cell){
+    /* Returns an array of neighor coordinates taking into account the board size */
     var neighbors = getNeighborsSimple([cell.x, cell.y, cell.z]);
     var neighborCells = [];
     for(var i = 0; i < neighbors.length; i++){
@@ -171,7 +175,9 @@ function getNeighbors(cell){
 }
 
 function floodFill(cell){
-    /* Assign the neighbors of the given cell to the same group as the cell */
+    /* Assign the neighbors of the given cell to the same group as the cell. Used during
+     * score calculation.
+     */
     var curScoreState = cell.scoreState;  //which color we are adding to the group
     var groupNum = cell.group;
     var stack = [];
@@ -298,21 +304,6 @@ function calculateScore(max_player, min_player){
     return scores;
 }
 
-function randomSample(population, k){
-    var sample = [];
-    var numLeft = population.length;
-    for(var i = 0; i < population.length; i++){
-        var e = population[i];
-        if (Math.floor(Math.random() * (numLeft+1)) < k){
-            sample.push(e);
-            k -= 1;
-        }
-        numLeft -= 1;
-    }
-    return sample;
-}
-
 function assert(statement){
-    if(!statement)
-        console.log("Assert Error");
+    if(!statement) console.log("Assert Error");
 }
