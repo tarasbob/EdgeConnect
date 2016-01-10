@@ -3,7 +3,7 @@ import itertools
 import string
 from flask import (
     Flask,
-    jsonify
+    jsonify,
     redirect,
     render_template,
     request,
