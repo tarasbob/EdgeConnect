@@ -1,7 +1,6 @@
 $(function(){
 
     $("#btn_start").click(function() {
-        var player_name = $("#player_name").val();
         var boardsize = $("#boardsize").val();
         var handicap = $("#handicap").val();
         var time_init = $("#time_init").val();
@@ -19,8 +18,7 @@ $(function(){
         }
 
 
-        data = {"player_name": player_name,
-                "board_size": boardsize,
+        data = {"board_size": boardsize,
                 "handicap": handicap,
                 "time_init": time_init}
 
