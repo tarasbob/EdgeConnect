@@ -132,6 +132,16 @@ class User(object):
     self.user_id = user_id
     self.game = None
 
+def add_user_to_db(username):
+  import psycopg2
+  conn_string = "host='104.236.83.49' dbname='test1' user='postgres'"
+  conn = psycopg2.connect(conn_string)
+  cursor = conn.cursor()
+  cursor.execute("INSERT INTO player (name, rating) values ('{0}', {1})".format(username, 500))
+  cursor.execute('SELECT * FROM player')
+  result = cursor.fetchall()
+  print result
+
 @app.route("/", methods=['GET', 'POST'])
 def front_page():
   '''Renders the front page as HTML.'''
@@ -143,10 +153,13 @@ def front_page():
     app.users[user_id] = User(username, user_id)
     # Store username an user_id in the session. Session is imported from flask and works
     # via cookies. Flask abstracts coookie management.
+    add_user_to_db(username)
     session['username'] = username
     session['user_id'] = user_id
     # Send user to front page after logging in
-    return redirect(url_for('front_page'))
+    tmp = redirect(url_for('front_page'))
+    print 'redirect', tmp
+    return tmp
   if 'username' not in session:
     # User is not logged in, send him to the login page
     return render_template('login_page.tmpl', assets=ASSETS)
@@ -156,7 +169,9 @@ def front_page():
     # parameter is set in join_game.
     del session['game_to_join']
     return redirect('/games/' + game_to_join)
-  return render_template('front_page.tmpl', assets=ASSETS)
+  tmp = render_template('front_page.tmpl', assets=ASSETS)
+  print 'render', type(tmp), tmp
+  return tmp
 
 @app.route('/games/<game_id>')
 def join_game(game_id):
