@@ -64,7 +64,7 @@ class GameBoard(object):
         self.grid[(x, y, z)] = 0
 
   def make_move(self, move):
-    # TODO: verify that the correct player is making a move
+    # TODO: verify that the correct player is making a move now
     for (x, y, z) in move:
       if self.grid[(x, y, z)] != 0:
         # The player played an illegal move (by moving to a cell that is not blank)
