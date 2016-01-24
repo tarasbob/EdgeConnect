@@ -374,6 +374,10 @@ $(function(){
   $("#btn_move").click(function(){
     commitMove();
   });
+
+  $("#btn_options").click(function(){
+    $("#optionsModal").modal('show');
+  });
   
   // Start polling the server every 1000 ms.
   setInterval(pollServer, 1000);
